@@ -16,8 +16,8 @@ func SetupRoute() *fiber.App {
 	app.Get("", readArticles)
 	app.Get("/api/v1/articles/:id", readArticle)
 	app.Post("/api/v1/articles", createArticle)
-	// app.Put("/api/v1/articles/:id", updateArticle)
-	// app.Delete("/api/v1/articles/:id", deleteArticle)
+	app.Put("/api/v1/articles/:id", updateArticle)
+	app.Delete("/api/v1/articles/:id", deleteArticle)
 
 	return &app
 }
@@ -83,6 +83,66 @@ func createArticle(c *fiber.Ctx) error {
 	c.Status(200).JSON(&fiber.Map{
 		"article": article,
 	})
+
+	return nil
+}
+
+// @Summary update an article by ID
+// @ID updateArticle
+// @Tags Update an article
+// @Produce json
+// @Param id path string true "articles ID"
+// @Success 200 {object} map[string]database.Article{}
+// @Router /api/v1/articles/{id} [put]
+func updateArticle(c *fiber.Ctx) error {
+	updateArticle := new(database.Article)
+
+	err := c.BodyParser(updateArticle)
+
+	if err != nil {
+		c.Status(500).JSON(&fiber.Map{
+			"error": err.Error(),
+		})
+		return err
+	}
+	id := c.Params("id")
+	if article, ok := articles[id]; ok {
+		article.Title = updateArticle.Title
+		article.Description = updateArticle.Description
+		article.Rate = updateArticle.Rate
+		articles[id] = article
+		c.Status(200).JSON(&fiber.Map{
+			"article": article,
+		})
+	} else {
+		c.Status(404).JSON(&fiber.Map{
+			"error": "article not found",
+		})
+
+	}
+	return nil
+}
+
+// @Summary delete an article by ID
+// @ID deleteArticle
+// @Tags Delete article
+// @Produce json
+// @Param id path string true "articles ID"
+// @Success 200 {object} map[string]database.Article{}
+// @Router /api/v1/articles/{id} [delete]
+func deleteArticle(c *fiber.Ctx) error {
+	id := c.Params("id")
+
+	if _, ok := articles[id]; ok {
+		delete(articles, id)
+		c.Status(200).JSON(&fiber.Map{
+			"message": "article deleted successfully",
+		})
+	} else {
+		c.Status(404).JSON(&fiber.Map{
+			"error": "article not found",
+		})
+	}
 
 	return nil
 }

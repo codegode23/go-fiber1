@@ -132,6 +132,66 @@
                         }
                     }
                 }
+            },
+            "put": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Update an article"
+                ],
+                "summary": "update an article by ID",
+                "operationId": "updateArticle",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "articles ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "$ref": "#/definitions/database.Article"
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Delete article"
+                ],
+                "summary": "delete an article by ID",
+                "operationId": "deleteArticle",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "articles ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "$ref": "#/definitions/database.Article"
+                            }
+                        }
+                    }
+                }
             }
         }
     },
