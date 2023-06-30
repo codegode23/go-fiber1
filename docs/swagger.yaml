@@ -1,0 +1,104 @@
+basePath: /
+definitions:
+  database.Article:
+    properties:
+      description:
+        type: string
+      id:
+        type: string
+      rate:
+        type: integer
+      title:
+        type: string
+    type: object
+host: localhost:3000
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample server server like that.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Fiber Swagger Example API
+  version: "2.0"
+paths:
+  /:
+    get:
+      consumes:
+      - '*/*'
+      description: get the status of server.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Show the status of server.
+      tags:
+      - root
+  /api/v1/articles:
+    post:
+      operationId: createArticle
+      parameters:
+      - description: New articles
+        in: body
+        name: data
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              $ref: '#/definitions/database.Article'
+            type: object
+      summary: create a new article
+      tags:
+      - Create a new article
+  /api/v1/articles/:
+    get:
+      operationId: readArticles
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              $ref: '#/definitions/database.Article'
+            type: object
+      summary: get all articles in the article list
+      tags:
+      - Get all articles
+  /api/v1/articles/{id}:
+    get:
+      operationId: readArticle
+      parameters:
+      - description: articles ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              $ref: '#/definitions/database.Article'
+            type: object
+      summary: read an article by ID
+      tags:
+      - Get article by ID
+schemes:
+- http
+swagger: "2.0"
