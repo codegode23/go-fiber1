@@ -22,6 +22,7 @@ func SetupRoute() *fiber.App {
 	return &app
 }
 
+// Get all articles godoc
 // @Summary get all articles in the article list
 // @ID readArticles
 // @Tags Get all articles
@@ -35,6 +36,7 @@ func readArticles(c *fiber.Ctx) error {
 	return nil
 }
 
+// Read an article godoc
 // @Summary read an article by ID
 // @ID readArticle
 // @Tags Get article by ID
@@ -57,6 +59,7 @@ func readArticle(c *fiber.Ctx) error {
 	return nil
 }
 
+// Create article godoc
 // @Summary create a new article
 // @ID createArticle
 // @Tags Create a new article
@@ -87,6 +90,7 @@ func createArticle(c *fiber.Ctx) error {
 	return nil
 }
 
+// Update article godoc
 // @Summary update an article by ID
 // @ID updateArticle
 // @Tags Update an article
@@ -123,6 +127,7 @@ func updateArticle(c *fiber.Ctx) error {
 	return nil
 }
 
+// Delete an article godoc
 // @Summary delete an article by ID
 // @ID deleteArticle
 // @Tags Delete article
