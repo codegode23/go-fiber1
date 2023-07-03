@@ -28,7 +28,7 @@ func SetupRoute() *fiber.App {
 // @Tags Get all articles
 // @Produce json
 // @Success 200 {object} map[string]database.Article{}
-// @Router /api/v1/articles/ [get]
+// @Router / [get]
 func readArticles(c *fiber.Ctx) error {
 	c.Status(200).JSON(&fiber.Map{
 		"articles": articles,

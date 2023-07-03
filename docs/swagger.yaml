@@ -63,21 +63,6 @@ paths:
       summary: create a new article
       tags:
       - Create a new article
-  /api/v1/articles/:
-    get:
-      operationId: readArticles
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            additionalProperties:
-              $ref: '#/definitions/database.Article'
-            type: object
-      summary: get all articles in the article list
-      tags:
-      - Get all articles
   /api/v1/articles/{id}:
     delete:
       operationId: deleteArticle

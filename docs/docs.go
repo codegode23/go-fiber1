@@ -83,29 +83,6 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/articles/": {
-            "get": {
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Get all articles"
-                ],
-                "summary": "get all articles in the article list",
-                "operationId": "readArticles",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "$ref": "#/definitions/database.Article"
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/api/v1/articles/{id}": {
             "get": {
                 "produces": [
