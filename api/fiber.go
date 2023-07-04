@@ -13,7 +13,7 @@ var (
 func SetupRoute() *fiber.App {
 	app := *fiber.New()
 
-	app.Get("", readArticles)
+	app.Get("api/v1/articles", readArticles)
 	app.Get("/api/v1/articles/:id", readArticle)
 	app.Post("/api/v1/articles", createArticle)
 	app.Put("/api/v1/articles/:id", updateArticle)
@@ -28,7 +28,7 @@ func SetupRoute() *fiber.App {
 // @Tags Get all articles
 // @Produce json
 // @Success 200 {object} map[string]database.Article{}
-// @Router / [get]
+// @Router /api/v1/articles [get]
 func readArticles(c *fiber.Ctx) error {
 	c.Status(200).JSON(&fiber.Map{
 		"articles": articles,
