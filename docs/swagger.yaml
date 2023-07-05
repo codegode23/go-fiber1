@@ -121,8 +121,15 @@ paths:
       tags:
       - Get article by ID
     put:
+      consumes:
+      - application/json
       operationId: updateArticle
       parameters:
+      - description: articles ID
+        in: path
+        name: id
+        required: true
+        type: string
       - description: articles ID
         in: body
         name: data

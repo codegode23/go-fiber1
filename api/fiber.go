@@ -96,8 +96,10 @@ func readArticle(c *fiber.Ctx) error {
 // @Summary update an article by ID
 // @ID updateArticle
 // @Tags Update an article
+// @Accept json
 // @Produce json
 // @Body
+// @Param id path string true "articles ID"
 // @Param data body string true "articles ID"
 // @Success 200 {object} map[string]database.Article{}
 // @Router /api/v1/articles/{id} [put]
@@ -114,10 +116,10 @@ func updateArticle(c *fiber.Ctx) error {
 	}
 	id := c.Params("id")
 	if article, ok := articles[id]; ok {
-		article.Title = updateArticle.Title
 		article.Description = updateArticle.Description
-		article.Rate = updateArticle.Rate
 		articles[id] = article
+		article.Title = updateArticle.Title
+		article.Rate = updateArticle.Rate
 		c.Status(200).JSON(&fiber.Map{
 			"article": article,
 		})

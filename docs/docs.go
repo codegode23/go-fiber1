@@ -139,6 +139,9 @@ const docTemplate = `{
                 }
             },
             "put": {
+                "consumes": [
+                    "application/json"
+                ],
                 "produces": [
                     "application/json"
                 ],
@@ -148,6 +151,13 @@ const docTemplate = `{
                 "summary": "update an article by ID",
                 "operationId": "updateArticle",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "articles ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
                     {
                         "description": "articles ID",
                         "name": "data",
