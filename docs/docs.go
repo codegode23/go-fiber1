@@ -72,6 +72,9 @@ const docTemplate = `{
                 }
             },
             "post": {
+                "consumes": [
+                    "application/json"
+                ],
                 "produces": [
                     "application/json"
                 ],
@@ -146,11 +149,13 @@ const docTemplate = `{
                 "operationId": "updateArticle",
                 "parameters": [
                     {
-                        "type": "string",
                         "description": "articles ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
                     }
                 ],
                 "responses": {

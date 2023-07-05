@@ -13,13 +13,46 @@ var (
 func SetupRoute() *fiber.App {
 	app := *fiber.New()
 
+	app.Post("/api/v1/articles", createArticle)
 	app.Get("api/v1/articles", readArticles)
 	app.Get("/api/v1/articles/:id", readArticle)
-	app.Post("/api/v1/articles", createArticle)
 	app.Put("/api/v1/articles/:id", updateArticle)
 	app.Delete("/api/v1/articles/:id", deleteArticle)
 
 	return &app
+}
+
+// Create article godoc
+// @Summary create a new article
+// @ID createArticle
+// @Tags Create a new article
+// @Accept	json
+// @Produce json
+// @Body
+// @Param data body string true "New articles"
+// @Success 200 {object} map[string]database.Article{}
+// @Router /api/v1/articles [post]
+func createArticle(c *fiber.Ctx) error {
+	article := new(database.Article)
+
+	err := c.BodyParser(&article)
+
+	if err != nil {
+		return c.Status(fiber.StatusUnprocessableEntity).JSON(fiber.Map{
+			"errors": err.Error(),
+		})
+
+	}
+
+	article.ID = uuid.New().String()
+
+	articles[article.ID] = *article
+
+	c.Status(200).JSON(&fiber.Map{
+		"article": article,
+	})
+
+	return nil
 }
 
 // Get all articles godoc
@@ -59,43 +92,13 @@ func readArticle(c *fiber.Ctx) error {
 	return nil
 }
 
-// Create article godoc
-// @Summary create a new article
-// @ID createArticle
-// @Tags Create a new article
-// @Produce json
-// @Param data body string true "New articles"
-// @Success 200 {object} map[string]database.Article{}
-// @Router /api/v1/articles [post]
-func createArticle(c *fiber.Ctx) error {
-	article := new(database.Article)
-
-	err := c.BodyParser(&article)
-
-	if err != nil {
-		return c.Status(fiber.StatusUnprocessableEntity).JSON(fiber.Map{
-			"errors": err.Error(),
-		})
-
-	}
-
-	article.ID = uuid.New().String()
-
-	articles[article.ID] = *article
-
-	c.Status(200).JSON(&fiber.Map{
-		"article": article,
-	})
-
-	return nil
-}
-
 // Update article godoc
 // @Summary update an article by ID
 // @ID updateArticle
 // @Tags Update an article
 // @Produce json
-// @Param id path string true "articles ID"
+// @Body
+// @Param data body string true "articles ID"
 // @Success 200 {object} map[string]database.Article{}
 // @Router /api/v1/articles/{id} [put]
 func updateArticle(c *fiber.Ctx) error {

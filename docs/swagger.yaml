@@ -57,6 +57,8 @@ paths:
       tags:
       - Get all articles
     post:
+      consumes:
+      - application/json
       operationId: createArticle
       parameters:
       - description: New articles
@@ -122,10 +124,11 @@ paths:
       operationId: updateArticle
       parameters:
       - description: articles ID
-        in: path
-        name: id
+        in: body
+        name: data
         required: true
-        type: string
+        schema:
+          type: string
       produces:
       - application/json
       responses:
